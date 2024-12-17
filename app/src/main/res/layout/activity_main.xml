@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <!-- Login or Register FORM -->
+    <ImageView
+        android:id="@+id/logo_iv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/logo"
+        android:contentDescription="Logo"
+        android:scaleType="fitCenter" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_til"
