@@ -36,11 +36,15 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
 
+    implementation(libs.androidx.appcompat.v131)
+    implementation(libs.material.v140)
+    implementation(libs.androidx.constraintlayout.v210)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,6 +67,11 @@ dependencies {
 
     // LIFECYCLE
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // TEST
     testImplementation(libs.junit)
