@@ -1,160 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#D9D9D9">
 
-    <!-- Image de background prenant la moitié de l'écran -->
-
-    <ImageView
-        android:id="@+id/background_image"
+    <!-- Section Header -->
+    <!-- make the relative layout rounded -->
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_alignEnd="@+id/center_text"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="-186dp"
-        android:layout_marginEnd="-327dp"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_home" />
+        android:background="@drawable/header_rounded_bg"
+        android:padding="16dp"
 
-    <TextView
-        android:id="@+id/center_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="174dp"
-        android:text="Bienvenue"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        >
 
-    <TextView
-        android:id="@+id/account_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/center_text"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="148dp"
-        android:text="1234,56 €"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <!-- Bouton Image utilisateur -->
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user_icon"
+            android:scaleType="centerCrop" />
 
+        <!-- Texte : Nom & Prénom -->
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/user_image"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
+            android:text="Jerry Helfer"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
 
-    //add 4 rounded button here with a semi transparent background color
-    <LinearLayout
-        android:id="@+id/rounded_button"
+        <!-- Icône Cloche Notifications -->
+        <ImageView
+            android:id="@+id/notification_bell"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/bell_solid"
+            android:contentDescription="Notifications" />
+    </RelativeLayout>
+
+    <!-- Section Balance -->
+    <RelativeLayout
+        android:id="@+id/balance_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/account_balance"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_below="@id/header"
+        android:background="@drawable/section_rounded"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        >
 
-        <Button
-            android:id="@+id/button1"
+        <TextView
+            android:id="@+id/balance_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_border"
-            android:text="Button 1"
-            android:textColor="@android:color/white" />
+            android:layout_marginLeft="30dp"
+            android:text="Total Balance"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button2"
+        <TextView
+            android:id="@+id/account_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_border"
-            android:text="Button 2"
-            android:textColor="@android:color/white" />
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/balance_text"
+            android:text="1234,56 €"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
 
-        <Button
-            android:id="@+id/button3"
+        <LinearLayout
+            android:id="@+id/button_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_border"
-            android:text="Button 3"
-            android:textColor="@android:color/white" />
+            android:layout_below="@+id/account_balance"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            >
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_border"
-            android:backgroundTintMode="add"
-            android:text=""
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cornerRadius="0dp"
+                style="@style/LeftRoundedButton"
+                app:backgroundTint="@color/black"
+                android:text="Analytics"
+                android:textColor="@android:color/white"
+                />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cornerRadius="0dp"
+                style="@style/UnroudedButton"
+                app:backgroundTint="@color/black"
+                android:text="Withdraw"
+                android:textColor="@android:color/white" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cornerRadius="0dp"
+                style="@style/RightRoundedButton"
+                app:backgroundTint="@color/black"
+                android:text="Deposit"
+                android:textColor="@android:color/white" />
 
-    <LinearLayout
-        android:id="@+id/bottom_navigation"
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Section Control Your Finances -->
+    <RelativeLayout
+        android:id="@+id/finances_section"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_section"
+        android:background="@drawable/section_rounded"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/finances_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Control Your Finances"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/finances_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/finances_text"
+            android:text="View Payments ->"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <!-- Subscriptions Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/finances_section"
+        android:background="@drawable/section_rounded"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/subscriptions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Subscriptions"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <!-- Subscription 1 - Netflix (ReklativeLayout containing : Title, logo, type, cost, cancel button) -->
+        <RelativeLayout
+            android:id="@+id/subscription1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingHorizontal="35dp"
+            android:layout_below="@+id/subscriptions_text"
+            >
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home" />
+                android:id="@+id/subscription1_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/netflix_logo"
+                android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/subscription1_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_toEndOf="@id/subscription1_logo"
+                android:layout_marginStart="16dp"
+                android:text="Netflix"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <TextView
+                android:id="@+id/subscription1_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subscription1_title"
+                android:layout_toEndOf="@id/subscription1_logo"
+                android:layout_marginStart="16dp"
+                android:text="Monthly"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/subscription1_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subscription1_type"
+                android:layout_toEndOf="@id/subscription1_logo"
+                android:layout_marginStart="16dp"
+                android:text="9,99 €"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/subscription1_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:text="Cancel"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/black"
+                />
+
+    </RelativeLayout>
+
+        <!-- Subscription 2 - Spotify (ReklativeLayout containing : Title, logo, type, cost, cancel button) -->
+        <RelativeLayout
+            android:id="@+id/subscription2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingHorizontal="35dp"
+            android:layout_below="@+id/subscription1"
+            >
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_payment" />
+                android:id="@+id/subscription2_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/spotify_logo"
+                android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/subscription2_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Payment"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_settings" />
+                android:layout_toEndOf="@id/subscription2_logo"
+                android:layout_marginStart="16dp"
+                android:text="Spotify"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/subscription2_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Parameter"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_below="@+id/subscription2_title"
+                android:layout_toEndOf="@id/subscription2_logo"
+                android:layout_marginStart="16dp"
+                android:text="Monthly"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/subscription2_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subscription2_type"
+                android:layout_toEndOf="@id/subscription2_logo"
+                android:layout_marginStart="16dp"
+                android:text="9,99 €"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/subscription2_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:text="Cancel"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/black"
+                />
+
 </RelativeLayout>

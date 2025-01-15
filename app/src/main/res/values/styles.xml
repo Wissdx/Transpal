@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LeftRoundedButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/left_rounded_btn</item>
+    </style>
+    <style name="RightRoundedButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/right_rounded_btn</item>
+    </style>
+    <style name="UnroudedButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/unrouded_btn</item>
+    </style>
+</resources>
