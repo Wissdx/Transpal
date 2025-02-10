@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_below="@+id/balance_text"
-            android:text="$ 8,343.20"
+            android:text="$ 9,343.20"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             />
@@ -152,6 +152,8 @@
         android:background="@drawable/section_rounded"
         android:layout_marginTop="5dp"
         android:padding="10dp"
+        android:clickable="true"
+        android:focusable="true"
         >
 
         <TextView
