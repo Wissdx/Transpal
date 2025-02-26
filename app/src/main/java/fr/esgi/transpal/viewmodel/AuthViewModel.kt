@@ -1,5 +1,6 @@
 package fr.esgi.transpal.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,15 +16,20 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     val loginResponse: LiveData<LoginResponse> get() = _loginResponse
 
     fun login(loginRequest: LoginRequest) {
+        Log.w("AuthViewModel", "login")
         viewModelScope.launch {
             try {
                 val response = authRepository.login(loginRequest)
                 if (response.isSuccessful) {
                     _loginResponse.value = response.body()
                 } else {
-                    _loginResponse.value = LoginResponse("", "An error occurred")
+                    Log.w("AuthViewModel", "Error : ${response.errorBody()?.string()}")
+                    val errorMessage = response.errorBody()?.string()
+                    _loginResponse.value = LoginResponse("", "An error occurred : $errorMessage")
                 }
             } catch (e: Exception) {
+
+                Log.w("AuthViewModel", "Error : ${e.message} : ${e.toString()}")
                 _loginResponse.value = LoginResponse("", e.message ?: "An error occurred")
             }
         }

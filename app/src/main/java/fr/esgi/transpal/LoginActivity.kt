@@ -30,7 +30,7 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         email_et = findViewById(R.id.email_et);
         password_et = findViewById(R.id.password_et);
