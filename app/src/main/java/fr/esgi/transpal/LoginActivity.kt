@@ -1,5 +1,6 @@
 package fr.esgi.transpal
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -60,16 +61,26 @@ class LoginActivity : ComponentActivity() {
         }
 
         authViewModel.loginResponse.observe(this, Observer { result ->
-            login_btn.isEnabled = true;
-            if (result.message != null) {
-                Toast.makeText(this, "Connexion échouée", Toast.LENGTH_LONG).show();
+            login_btn.isEnabled = true
+            if (result.token.isNotEmpty()) {
+                val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                with(sharedPreferences.edit()) {
+                    putString("auth_token", result.token)
+                    putInt("user_id", result.user.id)
+                    putString("user_email", result.user.email)
+                    putString("user_name", result.user.name)
+                    putString("user_created_at", result.user.createdAt)
+                    putString("user_updated_at", result.user.updatedAt)
+                    apply()
+                }
+                Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
-                error_tv.visibility = TextView.GONE;
-                Toast.makeText(this, "Bienvenue !", Toast.LENGTH_LONG).show();
-                val intent = Intent(this, MainActivity::class.java);
-                startActivity(intent);
+                Toast.makeText(this, "Connexion échouée : ${result.message}", Toast.LENGTH_LONG).show()
             }
-        });
+        })
 
     }
 }

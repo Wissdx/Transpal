@@ -17,19 +17,19 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun login(loginRequest: LoginRequest) {
         Log.w("AuthViewModel", "login")
-        viewModelScope.launch { // ✅ Exécuter l'API dans une coroutine
+        viewModelScope.launch {
             try {
                 val response = authRepository.login(loginRequest)
 
                 if (response.token.isNotEmpty()) {
                     _loginResponse.value = response
+
                 } else {
+
                     Log.w("AuthViewModel", "Erreur d'authentification : ${response.message}")
-                    _loginResponse.value = LoginResponse("", response.message)
                 }
             } catch (e: Exception) {
                 Log.w("AuthViewModel", "Exception : ${e.message}")
-                _loginResponse.value = LoginResponse("", e.message ?: "Erreur réseau")
             }
         }
     }

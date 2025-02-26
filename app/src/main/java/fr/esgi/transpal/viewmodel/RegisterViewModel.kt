@@ -1,5 +1,6 @@
 package fr.esgi.transpal.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,13 +21,7 @@ class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel(
                 val response = authRepository.register(registerRequest)
                 _registerResponse.value = response
             } catch (e: Exception) {
-                _registerResponse.value = RegisterResponse(
-                    -1, e.message ?: "Erreur réseau",
-                    password = "",
-                    name = "",
-                    updatedAt = "",
-                    createdAt = ""
-                )
+                Log.w("RegisterViewModel", "Exception : ${e.message}")
             }
         }
     }
