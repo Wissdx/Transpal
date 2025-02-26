@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         val userImage = findViewById<ImageView>(R.id.user_image);
         val userName = findViewById<TextView>(R.id.user_name);
 
-        // onClickListener for user image and user name to open profile activity
         userImage.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)

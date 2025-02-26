@@ -26,6 +26,7 @@ class LoginActivity : ComponentActivity() {
     private lateinit var password_et : EditText;
     private lateinit var login_btn : Button;
     private lateinit var error_tv : TextView;
+    private lateinit var register_here_tv : TextView;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,7 @@ class LoginActivity : ComponentActivity() {
         password_et = findViewById(R.id.password_et);
         login_btn = findViewById(R.id.login_btn);
         error_tv = findViewById(R.id.error_tv);
+        register_here_tv = findViewById(R.id.register_here_tv);
 
 
         login_btn.setOnClickListener {
@@ -52,16 +54,18 @@ class LoginActivity : ComponentActivity() {
             }
         }
 
+        register_here_tv.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
         authViewModel.loginResponse.observe(this, Observer { result ->
             login_btn.isEnabled = true;
             if (result.message != null) {
-                // error_tv.visibility = TextView.VISIBLE;
-                // error_tv.text = result.message;
                 Toast.makeText(this, "Connexion échouée", Toast.LENGTH_LONG).show();
             } else {
                 error_tv.visibility = TextView.GONE;
                 Toast.makeText(this, "Bienvenue !", Toast.LENGTH_LONG).show();
-                // ✅ Rediriger vers la page d'accueil
                 val intent = Intent(this, MainActivity::class.java);
                 startActivity(intent);
             }
