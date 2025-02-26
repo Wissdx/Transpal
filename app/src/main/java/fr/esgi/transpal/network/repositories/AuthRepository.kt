@@ -10,8 +10,8 @@ class AuthRepository {
 
     private val authService = RetrofitClient.instance.create(AuthService::class.java)
 
-    suspend fun login(loginRequest: LoginRequest): Response<LoginResponse> {
-        return authService.login(loginRequest).execute()
+     suspend fun login(loginRequest: LoginRequest): LoginResponse {
+        return authService.login(loginRequest)
     }
 
 }
