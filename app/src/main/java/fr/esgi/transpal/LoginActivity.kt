@@ -1,5 +1,6 @@
 package fr.esgi.transpal
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -54,11 +55,15 @@ class LoginActivity : ComponentActivity() {
         authViewModel.loginResponse.observe(this, Observer { result ->
             login_btn.isEnabled = true;
             if (result.message != null) {
-                error_tv.visibility = TextView.VISIBLE;
-                error_tv.text = result.message;
+                // error_tv.visibility = TextView.VISIBLE;
+                // error_tv.text = result.message;
+                Toast.makeText(this, "Connexion échouée", Toast.LENGTH_LONG).show();
             } else {
                 error_tv.visibility = TextView.GONE;
                 Toast.makeText(this, "Bienvenue !", Toast.LENGTH_LONG).show();
+                // ✅ Rediriger vers la page d'accueil
+                val intent = Intent(this, MainActivity::class.java);
+                startActivity(intent);
             }
         });
 
