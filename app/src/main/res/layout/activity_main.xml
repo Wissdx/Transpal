@@ -5,8 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#D9D9D9">
 
-    <!-- Section Header -->
-    <!-- make the relative layout rounded -->
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -14,10 +12,9 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/header_rounded_bg"
         android:padding="16dp"
-
+        android:layout_marginHorizontal="10dp"
         >
 
-        <!-- Bouton Image utilisateur -->
         <ImageView
             android:id="@+id/user_image"
             android:layout_width="50dp"
@@ -27,7 +24,6 @@
             android:src="@drawable/user_icon"
             android:scaleType="centerCrop" />
 
-        <!-- Texte : Nom & Prénom -->
         <TextView
             android:fontFamily="@font/gontserrat"
             android:id="@+id/user_name"
@@ -41,7 +37,6 @@
             android:textStyle="bold"
             android:textColor="@android:color/black" />
 
-        <!-- Icône Cloche Notifications -->
         <ImageView
             android:id="@+id/notification_bell"
             android:layout_width="30dp"
@@ -52,105 +47,61 @@
             android:contentDescription="Notifications" />
     </RelativeLayout>
 
-    <!-- Section Balance -->
     <RelativeLayout
         android:id="@+id/balance_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_below="@id/header"
-        android:background="@drawable/section_rounded"
-        android:layout_marginTop="5dp"
+        android:background="@drawable/section_rounded_with_bg"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
-        >
+        android:clipToOutline="true">
 
-        <TextView
-            android:fontFamily="@font/gontserrat"
-            android:id="@+id/balance_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Total Balance"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <TextView
+        android:fontFamily="@font/gontserrat"
+        android:id="@+id/balance_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/total_balance"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:fontFamily="@font/gontserrat"
-            android:id="@+id/account_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_below="@+id/balance_text"
-            android:text="$ 9,343.20"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            />
+    <TextView
+        android:fontFamily="@font/gontserrat"
+        android:id="@+id/account_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:text="$ 9,343.20"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
-        <LinearLayout
-            android:id="@+id/button_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/account_balance"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-            >
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_details_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_balance"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/view_payments"
+        app:backgroundTint="@color/grey"
+        android:textColor="@android:color/white"
+        android:alpha="0.8" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button1"
-                android:text="Analytics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/analytics"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/LeftRoundedButton"
-                />
+</RelativeLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button2"
-                android:text="Withdraw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/arrow_up"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/UnroudedButton"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button3"
-                android:text="Deposit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/arrow_down"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/RightRoundedButton"
-                />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <!-- Section Control Your Finances -->
     <RelativeLayout
         android:id="@+id/finances_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/balance_section"
         android:background="@drawable/section_rounded"
-        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:clickable="true"
         android:focusable="true"
@@ -161,7 +112,7 @@
             android:id="@+id/finances_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:text="Control Your Finances"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -189,13 +140,13 @@
             />
     </RelativeLayout>
 
-    <!-- Subscriptions Section -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/finances_section"
         android:background="@drawable/section_rounded"
-        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         >
 
@@ -346,5 +297,55 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/button_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:elevation="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button1"
+            android:text="Analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="0dp"
+            app:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            app:icon="@drawable/analytics"
+            app:iconGravity="top"
+            app:iconSize="20dp"
+            style="@style/LeftRoundedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button2"
+            android:text="Withdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="0dp"
+            app:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            app:icon="@drawable/arrow_up"
+            app:iconGravity="top"
+            app:iconSize="20dp"
+            style="@style/UnroudedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button3"
+            android:text="Deposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="0dp"
+            app:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            app:icon="@drawable/arrow_down"
+            app:iconGravity="top"
+            app:iconSize="20dp"
+            style="@style/RightRoundedButton" />
+    </LinearLayout>
 
 </RelativeLayout>
