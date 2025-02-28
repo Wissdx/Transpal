@@ -2,6 +2,7 @@ package fr.esgi.transpal.network.services
 
 import fr.esgi.transpal.network.dto.TransactionRequest
 import fr.esgi.transpal.network.dto.TransactionResponse
+import fr.esgi.transpal.network.dto.UserModel
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -21,4 +22,10 @@ interface TransactionService {
         @Header("Authorization") token: String,
         @Path("userId") userId: Int
     ): List<TransactionResponse>
+
+    @GET("transactions/{userId}/sent-to")
+    suspend fun getUsersSentMoneyTo(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Int
+    ): List<UserModel>
 }

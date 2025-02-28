@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.esgi.transpal.network.dto.TransactionRequest
 import fr.esgi.transpal.network.dto.TransactionResponse
+import fr.esgi.transpal.network.dto.UserModel
 import fr.esgi.transpal.network.repositories.TransactionRepository
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,8 @@ class TransactionViewModel(private val transactionRepository: TransactionReposit
     val transactionResponse: LiveData<TransactionResponse> get() = _transactionResponse
     private val _transactionHistory = MutableLiveData<List<TransactionResponse>>()
     val transactionHistory: LiveData<List<TransactionResponse>> get() = _transactionHistory
+    private val _usersSentMoneyTo = MutableLiveData<List<UserModel>>()
+    val usersSentMoneyTo: LiveData<List<UserModel>> get() = _usersSentMoneyTo
 
     fun sendMoney(token: String, transactionRequest: TransactionRequest) {
         viewModelScope.launch {
@@ -55,6 +58,27 @@ class TransactionViewModel(private val transactionRepository: TransactionReposit
                             updatedAt = "",
                             createdAt = "",
                             message = "Something went wrong. Make sure you have enough money in your account."
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    fun getUsersSentMoneyTo(token: String, userId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = transactionRepository.getUsersSentMoneyTo(token, userId)
+                _usersSentMoneyTo.postValue(response)
+            } catch (e: Exception) {
+                _usersSentMoneyTo.postValue(
+                    listOf(
+                        UserModel(
+                            id = -1,
+                            name = "Error",
+                            email = "",
+                            createdAt = "",
+                            updatedAt = ""
                         )
                     )
                 )

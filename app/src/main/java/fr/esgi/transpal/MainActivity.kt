@@ -39,28 +39,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var seeMoreTextView: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var transactionsRecyclerView: RecyclerView
+    private lateinit var recentUsersRecyclerView: RecyclerView
     private lateinit var userImage: ImageView
     private lateinit var sendButton: Button
 
 
     private lateinit var cardAdapter: CardAdapter
     private lateinit var transactionAdapter: TransactionAdapter
+    private lateinit var recentUserAdapter: RecentUserAdapter
+
     private val cardList = mutableListOf<CardModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        accountBalance = findViewById(R.id.account_balance)
         transactionsRecyclerView = findViewById(R.id.transactions_recycler_view)
         recyclerView = findViewById(R.id.recyclerView)
+        recentUsersRecyclerView = findViewById(R.id.recent_users_recycler_view)
+
+        accountBalance = findViewById(R.id.account_balance)
         addCardButton = findViewById(R.id.add_card_button)
         userImage = findViewById(R.id.user_image)
         userName = findViewById(R.id.user_name)
         sendButton = findViewById(R.id.button1)
         seeMoreTextView = findViewById(R.id.see_more_transaction)
-
-
         val userName = findViewById<TextView>(R.id.user_name)
 
         val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         if (token != null && userId != -1) {
             accountViewModel.getBalance(token, userId)
             transactionViewModel.getTransactionHistory(token, userId)
+            transactionViewModel.getUsersSentMoneyTo(token, userId)
         }
 
         accountViewModel.balance.observe(this, { balance ->
@@ -82,12 +86,29 @@ class MainActivity : AppCompatActivity() {
 
         transactionViewModel.transactionHistory.observe(this, { transactions ->
             if (transactions.isNotEmpty()) {
-                val recentTransactions = transactions.takeLast(3).sortedByDescending { it.createdAt }
+                val recentTransactions = transactions.takeLast(4)
                 transactionAdapter = TransactionAdapter(recentTransactions)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
             } else {
                 Toast.makeText(this, "No transactions found", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        transactionViewModel.usersSentMoneyTo.observe(this, { users ->
+            if (users.isNotEmpty()) {
+                recentUserAdapter = RecentUserAdapter(this, users) {
+                    val intent = Intent(this, SendMoneyActivity::class.java)
+                    intent.putExtra("selectedUserId", it.id)
+                    intent.putExtra("selectedUserName", it.name)
+                    intent.putExtra("selectedUserEmail", it.email)
+                    setResult(RESULT_OK, intent)
+                    startActivity(intent)
+                }
+                recentUsersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recentUsersRecyclerView.adapter = recentUserAdapter
+            } else {
+                Toast.makeText(this, "No recent users found", Toast.LENGTH_SHORT).show()
             }
         })
 

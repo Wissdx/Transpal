@@ -101,6 +101,33 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/recent_users_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/section_rounded"
+                android:layout_marginTop="15dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:fontFamily="@font/gontserrat"
+                    android:id="@+id/recent_users_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
+                    android:text="Send money again"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recent_users_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/cards_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,6 +228,7 @@
             app:icon="@drawable/analytics"
             app:iconGravity="top"
             app:iconSize="20dp"
+            android:paddingHorizontal="45dp"
             style="@style/LeftRoundedButton" />
 
         <com.google.android.material.button.MaterialButton
@@ -227,6 +255,7 @@
             app:icon="@drawable/arrow_down"
             app:iconGravity="top"
             app:iconSize="20dp"
+            android:paddingHorizontal="45dp"
             style="@style/RightRoundedButton" />
     </LinearLayout>
 </RelativeLayout>

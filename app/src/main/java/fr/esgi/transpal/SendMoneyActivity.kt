@@ -65,6 +65,16 @@ class SendMoneyActivity : AppCompatActivity() {
         userNameTextView = findViewById(R.id.user_name)
         userEmailTextView = findViewById(R.id.user_email)
 
+        val selectedUserId = intent.getIntExtra("selectedUserId", -1)
+        val selectedUserName = intent.getStringExtra("selectedUserName")
+        val selectedUserEmail = intent.getStringExtra("selectedUserEmail")
+
+        if (selectedUserId != -1) {
+            receiverIdEt.setText(selectedUserId.toString())
+            userNameTextView.text = selectedUserName
+            userEmailTextView.text = selectedUserEmail
+        }
+
         userInfoLayout.setOnClickListener {
             val intent = Intent(this, UserSelectionActivity::class.java)
             userSelectionLauncher.launch(intent)
