@@ -228,22 +228,22 @@
         android:elevation="8dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button1"
-            android:text="Send"
+            android:id="@+id/button2"
+            android:text="Withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cornerRadius="0dp"
             app:backgroundTint="@color/black"
             android:textColor="@android:color/white"
-            app:icon="@drawable/analytics"
+            app:icon="@drawable/arrow_back"
             app:iconGravity="top"
             app:iconSize="20dp"
             android:paddingHorizontal="45dp"
             style="@style/LeftRoundedButton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
-            android:text="Withdraw"
+            android:id="@+id/button1"
+            android:text="Send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cornerRadius="0dp"
