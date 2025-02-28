@@ -44,4 +44,13 @@
     </string>
     <string name="total_balance">Total Balance</string>
     <string name="view_payments">View Payments</string>
+    <string name="click_to_select_the_user">Click to select the user</string>
+    <string name="receiver_id_et">receiver_id_et</string>
+    <string name="send_money">Send Money</string>
+    <string name="user_icon">User Icon</string>
+    <string name="EUR">€</string>
+    <string name="_0_00">0.00</string>
+    <string name="send">Send</string>
+    <string name="go_back">Go Back</string>
+    <string name="back_icon">"back icon "</string>
 </resources>
