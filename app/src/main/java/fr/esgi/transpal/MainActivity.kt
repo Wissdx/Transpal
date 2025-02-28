@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +15,11 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import fr.esgi.transpal.network.dto.CardModel
 import fr.esgi.transpal.network.repositories.AccountRepository
+import fr.esgi.transpal.network.repositories.TransactionRepository
 import fr.esgi.transpal.viewmodel.AccountViewModel
+import fr.esgi.transpal.viewmodel.TransactionViewModel
 import fr.esgi.transpal.viewmodel.factories.AccountViewModelFactory
+import fr.esgi.transpal.viewmodel.factories.TransactionViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,14 +28,21 @@ class MainActivity : AppCompatActivity() {
         AccountViewModelFactory(accountRepository)
     }
 
+    private val transactionRepository = TransactionRepository()
+    private val transactionViewModel: TransactionViewModel by viewModels {
+        TransactionViewModelFactory(transactionRepository)
+    }
+
     private lateinit var accountBalance: TextView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var cardAdapter: CardAdapter
+    private lateinit var transactionsRecyclerView: RecyclerView
     private lateinit var addCardButton: TextView
     private lateinit var userImage: ImageView
     private lateinit var userName: TextView
     private lateinit var sendButton: Button
 
+    private lateinit var cardAdapter: CardAdapter
+    private lateinit var transactionAdapter: TransactionAdapter
     private val cardList = mutableListOf<CardModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         accountBalance = findViewById(R.id.account_balance)
+        transactionsRecyclerView = findViewById(R.id.transactions_recycler_view)
         recyclerView = findViewById(R.id.recyclerView)
         addCardButton = findViewById(R.id.add_card_button)
         userImage = findViewById(R.id.user_image)
@@ -56,11 +68,33 @@ class MainActivity : AppCompatActivity() {
 
         if (token != null && userId != -1) {
             accountViewModel.getBalance(token, userId)
+            transactionViewModel.getTransactionHistory(token, userId)
         }
+
         accountViewModel.balance.observe(this, { balance ->
             val responseText = balance.balance + " €"
             accountBalance.text = responseText
         })
+
+        transactionViewModel.transactionHistory.observe(this, { transactions ->
+            if (transactions.isNotEmpty()) {
+                val recentTransactions = transactions.takeLast(3)
+                transactionAdapter = TransactionAdapter(recentTransactions)
+                transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
+                transactionsRecyclerView.adapter = transactionAdapter
+            } else {
+                Toast.makeText(this, "No transactions found", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerView)
+
+        cardList.add(CardModel("1234567812345678", "Dark Vador", "12/24"))
+        cardList.add(CardModel("5834865414872912", "Obi-Wan Kenobi", "01/26"))
+
+        updateUI()
 
         userImage.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
@@ -71,15 +105,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
-
-        cardList.add(CardModel("1234567812345678", "Dark Vador", "12/24"))
-        cardList.add(CardModel("5834865414872912", "Obi-Wan Kenobi", "01/26"))
-
-        updateUI()
 
         addCardButton.setOnClickListener {
             val intent = Intent(this, CardActivity::class.java)

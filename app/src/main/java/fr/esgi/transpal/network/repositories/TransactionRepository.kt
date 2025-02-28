@@ -12,4 +12,8 @@ class TransactionRepository {
     suspend fun sendMoney(token: String, transactionRequest: TransactionRequest): TransactionResponse {
         return transactionService.sendMoney("Bearer $token", transactionRequest)
     }
+
+    suspend fun getTransactionHistory(token: String, userId: Int): List<TransactionResponse> {
+        return transactionService.getTransactionHistory("Bearer $token", userId)
+    }
 }
