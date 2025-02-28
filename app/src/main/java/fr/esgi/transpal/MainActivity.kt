@@ -34,12 +34,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var accountBalance: TextView
+    private lateinit var userName: TextView
+    private lateinit var addCardButton: TextView
+    private lateinit var seeMoreTextView: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var transactionsRecyclerView: RecyclerView
-    private lateinit var addCardButton: TextView
     private lateinit var userImage: ImageView
-    private lateinit var userName: TextView
     private lateinit var sendButton: Button
+
 
     private lateinit var cardAdapter: CardAdapter
     private lateinit var transactionAdapter: TransactionAdapter
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         userImage = findViewById(R.id.user_image)
         userName = findViewById(R.id.user_name)
         sendButton = findViewById(R.id.button1)
+        seeMoreTextView = findViewById(R.id.see_more_transaction)
+
 
         val userName = findViewById<TextView>(R.id.user_name)
 
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         transactionViewModel.transactionHistory.observe(this, { transactions ->
             if (transactions.isNotEmpty()) {
-                val recentTransactions = transactions.takeLast(3)
+                val recentTransactions = transactions.takeLast(3).sortedByDescending { it.createdAt }
                 transactionAdapter = TransactionAdapter(recentTransactions)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
@@ -113,6 +117,11 @@ class MainActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             val intent = Intent(this, SendMoneyActivity::class.java)
+            startActivity(intent)
+        }
+
+        seeMoreTextView.setOnClickListener {
+            val intent = Intent(this, TransactionHistoryActivity::class.java)
             startActivity(intent)
         }
     }
