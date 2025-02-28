@@ -25,6 +25,7 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 navigationFragmentKtx = "2.6.0"
 navigationUiKtx = "2.6.0"
+swiperefreshlayoutVersion = "1.1.0"
 
 [libraries]
 androidx-appcompat-v131 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -56,6 +57,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayoutVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

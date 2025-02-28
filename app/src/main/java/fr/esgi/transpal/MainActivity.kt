@@ -3,6 +3,8 @@ package fr.esgi.transpal
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.esgi.transpal.network.dto.CardModel
 import fr.esgi.transpal.network.repositories.AccountRepository
 import fr.esgi.transpal.network.repositories.TransactionRepository
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recentUsersRecyclerView: RecyclerView
     private lateinit var userImage: ImageView
     private lateinit var sendButton: Button
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 
     private lateinit var cardAdapter: CardAdapter
@@ -64,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         userName = findViewById(R.id.user_name)
         sendButton = findViewById(R.id.button1)
         seeMoreTextView = findViewById(R.id.see_more_transaction)
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
         val userName = findViewById<TextView>(R.id.user_name)
 
         val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -145,6 +150,28 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TransactionHistoryActivity::class.java)
             startActivity(intent)
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshData(token, userId)
+        }
+
+        val handler = Handler(Looper.getMainLooper())
+        val refreshRunnable = object : Runnable {
+            override fun run() {
+                refreshData(token, userId)
+                handler.postDelayed(this, 5000)
+            }
+        }
+        handler.post(refreshRunnable)
+    }
+
+    private fun refreshData(token: String?, userId: Int) {
+        if (token != null && userId != -1) {
+            accountViewModel.getBalance(token, userId)
+            transactionViewModel.getTransactionHistory(token, userId)
+            transactionViewModel.getUsersSentMoneyTo(token, userId)
+        }
+        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun updateUI() {
