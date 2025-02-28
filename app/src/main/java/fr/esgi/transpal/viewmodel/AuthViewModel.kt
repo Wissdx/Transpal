@@ -25,7 +25,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     _loginResponse.value = response
 
                 } else {
-
                     Log.w("AuthViewModel", "Erreur d'authentification : ${response.message}")
                 }
             } catch (e: Exception) {

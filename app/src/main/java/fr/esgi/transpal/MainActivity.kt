@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addCardButton: TextView
     private lateinit var userImage: ImageView
     private lateinit var userName: TextView
+    private lateinit var sendButton: Button
 
     private val cardList = mutableListOf<CardModel>()
 
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         addCardButton = findViewById(R.id.add_card_button)
         userImage = findViewById(R.id.user_image)
         userName = findViewById(R.id.user_name)
+        sendButton = findViewById(R.id.button1)
 
         val userName = findViewById<TextView>(R.id.user_name)
 
@@ -81,6 +83,11 @@ class MainActivity : AppCompatActivity() {
 
         addCardButton.setOnClickListener {
             val intent = Intent(this, CardActivity::class.java)
+            startActivity(intent)
+        }
+
+        sendButton.setOnClickListener {
+            val intent = Intent(this, SendMoneyActivity::class.java)
             startActivity(intent)
         }
     }
