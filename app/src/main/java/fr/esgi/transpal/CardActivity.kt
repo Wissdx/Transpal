@@ -2,6 +2,8 @@ package fr.esgi.transpal
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -18,7 +20,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import fr.esgi.transpal.network.dto.AddCardRequest
 import fr.esgi.transpal.network.dto.CardModel
-import fr.esgi.transpal.network.dto.CardResponse
 import fr.esgi.transpal.network.repositories.CardRepository
 import fr.esgi.transpal.viewmodel.CardViewModel
 import fr.esgi.transpal.viewmodel.factories.CardViewModelFactory
@@ -85,12 +86,13 @@ class CardActivity : AppCompatActivity() {
         }
 
         saveCardButton.setOnClickListener {
-            val cardNumber = cardNumberInput.text.toString()
+            // On retire les espaces pour la validation du numéro de carte
+            val cardNumber = cardNumberInput.text.toString().replace(" ", "")
             val cardHolder = cardHolderInput.text.toString()
             val cardExpiry = cardExpiryInput.text.toString()
             val cardCvv = cardCvvInput.text.toString()
 
-            if (cardNumber.isNotEmpty() && cardHolder.isNotEmpty() && cardExpiry.isNotEmpty()) {
+            if (validateCardDetails(cardNumber, cardHolder, cardExpiry, cardCvv)) {
                 if (token.isNotEmpty() && userId != -1) {
                     val addCardRequest = AddCardRequest(
                         name = cardHolder,
@@ -118,7 +120,7 @@ class CardActivity : AppCompatActivity() {
                     })
                 }
             } else {
-                Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Veuillez remplir tous les champs correctement", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -147,6 +149,76 @@ class CardActivity : AppCompatActivity() {
             cardExpiryInput.text.clear()
             cardCvvInput.text.clear()
         }
+
+        setupTextWatchers()
+    }
+
+    private fun setupTextWatchers() {
+        // TextWatcher pour le champ cardNumberInput : limitation à 16 chiffres et insertion d'un espace tous les 4 chiffres
+        cardNumberInput.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting) return
+                isFormatting = true
+
+                val digitsOnly = s?.toString()?.replace(" ", "") ?: ""
+                // Limiter à 16 chiffres
+                val limited = if (digitsOnly.length > 16) digitsOnly.substring(0, 16) else digitsOnly
+
+                val formatted = StringBuilder()
+                for (i in limited.indices) {
+                    if (i > 0 && i % 4 == 0) {
+                        formatted.append(" ")
+                    }
+                    formatted.append(limited[i])
+                }
+
+                cardNumberInput.removeTextChangedListener(this)
+                cardNumberInput.setText(formatted.toString())
+                cardNumberInput.setSelection(formatted.length)
+                cardNumberInput.addTextChangedListener(this)
+
+                isFormatting = false
+            }
+        })
+
+        // TextWatcher pour le champ cardExpiryInput : insertion automatique du slash uniquement si l'utilisateur a saisi plus de deux chiffres
+        cardExpiryInput.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting) return
+                isFormatting = true
+
+                // On supprime d'abord tous les slash existants
+                var text = s?.toString()?.replace("/", "") ?: ""
+                // Si l'utilisateur a saisi plus de deux chiffres, on insère le slash après le 2ème caractère
+                if (text.length > 2) {
+                    text = text.substring(0, 2) + "/" + text.substring(2)
+                }
+
+                cardExpiryInput.removeTextChangedListener(this)
+                cardExpiryInput.setText(text)
+                cardExpiryInput.setSelection(text.length)
+                cardExpiryInput.addTextChangedListener(this)
+
+                isFormatting = false
+            }
+        })
+    }
+
+    private fun validateCardDetails(cardNumber: String, cardHolder: String, cardExpiry: String, cardCvv: String): Boolean {
+        val cardNumberPattern = Regex("^[0-9]{16}$")
+        val cardExpiryPattern = Regex("^(0[1-9]|1[0-2])/[0-9]{2}$")
+        val cardCvvPattern = Regex("^[0-9]{3,4}$")
+
+        return cardNumberPattern.matches(cardNumber) &&
+                cardHolder.isNotEmpty() &&
+                cardExpiryPattern.matches(cardExpiry) &&
+                cardCvvPattern.matches(cardCvv)
     }
 
     private fun updateUI() {
