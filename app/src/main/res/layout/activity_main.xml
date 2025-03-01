@@ -54,8 +54,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/header"
-            android:layout_above="@id/button_group"
             android:fillViewport="true">
 
             <LinearLayout
@@ -69,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:background="@drawable/section_rounded_with_bg"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:padding="10dp"
                     android:clipToOutline="true">
 
@@ -208,11 +206,25 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp" />
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/logout_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/d_connexion"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="center_horizontal" />
+
             </LinearLayout>
         </ScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     <LinearLayout
         android:id="@+id/button_group"
@@ -265,4 +277,5 @@
             android:paddingHorizontal="45dp"
             style="@style/RightRoundedButton" />
     </LinearLayout>
+
 </RelativeLayout>

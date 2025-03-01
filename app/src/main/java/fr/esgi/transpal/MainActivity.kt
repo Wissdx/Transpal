@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var depositButton: Button
     private lateinit var withdrawButton: Button
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var logoutText: TextView
 
     private lateinit var cardAdapter: CardAdapter
     private lateinit var transactionAdapter: TransactionAdapter
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         withdrawButton = findViewById(R.id.button2)
         seeMoreTextView = findViewById(R.id.see_more_transaction)
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
-        val userName = findViewById<TextView>(R.id.user_name)
+        logoutText = findViewById(R.id.logout_text)
 
         val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val userNameString = sharedPreferences.getString("user_name", "Utilisateur")
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
         transactionViewModel.transactionHistory.observe(this, { transactions ->
             if (transactions.isNotEmpty()) {
-                val recentTransactions = transactions.takeLast(3).sortedByDescending { it.createdAt }
+                val recentTransactions = transactions.takeLast(4).sortedByDescending { it.createdAt }
                 transactionAdapter = TransactionAdapter(recentTransactions)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
@@ -174,6 +175,15 @@ class MainActivity : AppCompatActivity() {
 
         swipeRefreshLayout.setOnRefreshListener {
             refreshData(token, userId)
+        }
+
+        logoutText.setOnClickListener {
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         val handler = Handler(Looper.getMainLooper())

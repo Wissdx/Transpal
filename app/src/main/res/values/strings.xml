@@ -66,4 +66,5 @@
     <string name="add_card">Add Card</string>
     <string name="see_more">See More</string>
     <string name="recent_transactions">Recent Transactions</string>
+    <string name="d_connexion">Déconnexion</string>
 </resources>
