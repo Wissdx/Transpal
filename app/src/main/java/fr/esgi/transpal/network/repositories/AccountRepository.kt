@@ -4,6 +4,7 @@ import android.content.Context
 import fr.esgi.transpal.network.RetrofitClient
 import fr.esgi.transpal.network.dto.AddFundsRequest
 import fr.esgi.transpal.network.dto.BalanceResponse
+import fr.esgi.transpal.network.dto.WithdrawFundsRequest
 import fr.esgi.transpal.network.services.AccountService
 
 class AccountRepository(private val context: Context) {
@@ -16,6 +17,10 @@ class AccountRepository(private val context: Context) {
 
     suspend fun addFunds(token: String, userId: Int, addFundsRequest: AddFundsRequest) {
         accountService.addFunds("Bearer $token", userId, addFundsRequest)
+    }
+
+    suspend fun withdrawFunds(token: String, userId: Int, withdrawFundsRequest: WithdrawFundsRequest) {
+        accountService.withdrawFunds("Bearer $token", userId, withdrawFundsRequest)
     }
 
     fun getAuthToken(): String? {

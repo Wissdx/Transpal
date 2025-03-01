@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.esgi.transpal.network.dto.AddFundsRequest
 import fr.esgi.transpal.network.dto.BalanceResponse
+import fr.esgi.transpal.network.dto.WithdrawFundsRequest
 import fr.esgi.transpal.network.repositories.AccountRepository
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,17 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
         viewModelScope.launch {
             try {
                 accountRepository.addFunds(token, userId, addFundsRequest)
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e.message ?: "Erreur inconnue")
+            }
+        }
+    }
+
+    fun withdrawFunds(token: String, userId: Int, withdrawFundsRequest: WithdrawFundsRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                accountRepository.withdrawFunds(token, userId, withdrawFundsRequest)
                 onSuccess()
             } catch (e: Exception) {
                 onError(e.message ?: "Erreur inconnue")

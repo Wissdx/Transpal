@@ -44,6 +44,8 @@
             android:exported="false"/>
         <activity android:name=".DepositActivity"
             android:exported="false"/>
+        <activity android:name=".WithdrawActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

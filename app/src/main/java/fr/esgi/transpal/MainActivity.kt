@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userImage: ImageView
     private lateinit var sendButton: Button
     private lateinit var depositButton: Button
+    private lateinit var withdrawButton: Button
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var cardAdapter: CardAdapter
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         userName = findViewById(R.id.user_name)
         sendButton = findViewById(R.id.button1)
         depositButton = findViewById(R.id.button3)
+        withdrawButton = findViewById(R.id.button2)
         seeMoreTextView = findViewById(R.id.see_more_transaction)
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
         val userName = findViewById<TextView>(R.id.user_name)
@@ -157,6 +159,11 @@ class MainActivity : AppCompatActivity() {
 
         depositButton.setOnClickListener {
             val intent = Intent(this, DepositActivity::class.java)
+            startActivity(intent)
+        }
+
+        withdrawButton.setOnClickListener {
+            val intent = Intent(this, WithdrawActivity::class.java)
             startActivity(intent)
         }
 
