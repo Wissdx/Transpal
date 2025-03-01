@@ -3,9 +3,7 @@ package fr.esgi.transpal.viewmodel.factories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import fr.esgi.transpal.network.repositories.AccountRepository
-import fr.esgi.transpal.network.repositories.ProfileRepository
 import fr.esgi.transpal.viewmodel.AccountViewModel
-import fr.esgi.transpal.viewmodel.ProfileViewModel
 
 class AccountViewModelFactory(private val accountRepository: AccountRepository) : ViewModelProvider.Factory {
 
