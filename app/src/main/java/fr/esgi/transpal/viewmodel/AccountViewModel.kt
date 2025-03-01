@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fr.esgi.transpal.network.dto.BalanceRequest
+import fr.esgi.transpal.network.dto.AddFundsRequest
 import fr.esgi.transpal.network.dto.BalanceResponse
-import fr.esgi.transpal.network.dto.ProfileRequest
-import fr.esgi.transpal.network.dto.ProfileResponse
 import fr.esgi.transpal.network.repositories.AccountRepository
-import fr.esgi.transpal.network.repositories.ProfileRepository
 import kotlinx.coroutines.launch
 
 class AccountViewModel(private val accountRepository: AccountRepository) : ViewModel() {
@@ -21,6 +18,17 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
         viewModelScope.launch {
             val balanceInfo = accountRepository.getBalance(token, id)
             _balance.value = balanceInfo
+        }
+    }
+
+    fun addFunds(token: String, userId: Int, addFundsRequest: AddFundsRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                accountRepository.addFunds(token, userId, addFundsRequest)
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e.message ?: "Erreur inconnue")
+            }
         }
     }
 }

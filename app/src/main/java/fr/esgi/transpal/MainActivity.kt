@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recentUsersRecyclerView: RecyclerView
     private lateinit var userImage: ImageView
     private lateinit var sendButton: Button
+    private lateinit var depositButton: Button
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var cardAdapter: CardAdapter
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         userImage = findViewById(R.id.user_image)
         userName = findViewById(R.id.user_name)
         sendButton = findViewById(R.id.button1)
+        depositButton = findViewById(R.id.button3)
         seeMoreTextView = findViewById(R.id.see_more_transaction)
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
         val userName = findViewById<TextView>(R.id.user_name)
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
         transactionViewModel.transactionHistory.observe(this, { transactions ->
             if (transactions.isNotEmpty()) {
-                val recentTransactions = transactions.takeLast(4)
+                val recentTransactions = transactions.takeLast(3).sortedByDescending { it.createdAt }
                 transactionAdapter = TransactionAdapter(recentTransactions)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
@@ -150,6 +152,11 @@ class MainActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             val intent = Intent(this, SendMoneyActivity::class.java)
+            startActivity(intent)
+        }
+
+        depositButton.setOnClickListener {
+            val intent = Intent(this, DepositActivity::class.java)
             startActivity(intent)
         }
 
