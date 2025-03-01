@@ -4,5 +4,6 @@ data class CardModel(
 
         val cardNumber: String,
         val cardHolder: String,
+        val cvv: String,
         val expiryDate: String
 )

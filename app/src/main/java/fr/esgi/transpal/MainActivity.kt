@@ -12,16 +12,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.esgi.transpal.network.dto.CardModel
 import fr.esgi.transpal.network.repositories.AccountRepository
+import fr.esgi.transpal.network.repositories.CardRepository
 import fr.esgi.transpal.network.repositories.TransactionRepository
 import fr.esgi.transpal.viewmodel.AccountViewModel
+import fr.esgi.transpal.viewmodel.CardViewModel
 import fr.esgi.transpal.viewmodel.TransactionViewModel
 import fr.esgi.transpal.viewmodel.factories.AccountViewModelFactory
+import fr.esgi.transpal.viewmodel.factories.CardViewModelFactory
 import fr.esgi.transpal.viewmodel.factories.TransactionViewModelFactory
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         TransactionViewModelFactory(transactionRepository)
     }
 
+    private val cardViewModel: CardViewModel by viewModels {
+        CardViewModelFactory(CardRepository())
+    }
+
     private lateinit var accountBalance: TextView
     private lateinit var userName: TextView
     private lateinit var addCardButton: TextView
@@ -46,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userImage: ImageView
     private lateinit var sendButton: Button
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-
 
     private lateinit var cardAdapter: CardAdapter
     private lateinit var transactionAdapter: TransactionAdapter
@@ -82,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             accountViewModel.getBalance(token, userId)
             transactionViewModel.getTransactionHistory(token, userId)
             transactionViewModel.getUsersSentMoneyTo(token, userId)
+            cardViewModel.getCards("Bearer $token", userId)
         }
 
         accountViewModel.balance.observe(this, { balance ->
@@ -95,8 +103,6 @@ class MainActivity : AppCompatActivity() {
                 transactionAdapter = TransactionAdapter(recentTransactions)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
-            } else {
-                Toast.makeText(this, "No transactions found", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -112,17 +118,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 recentUsersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                 recentUsersRecyclerView.adapter = recentUserAdapter
-            } else {
-                Toast.makeText(this, "No recent users found", Toast.LENGTH_SHORT).show()
             }
+        })
+
+        cardViewModel.cards.observe(this, Observer { cards ->
+            cardList.clear()
+            cardList.addAll(cards.map { CardModel(it.cardNumber, it.name, it.cvv, it.expiryDate) })
+            updateUI()
         })
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
-
-        cardList.add(CardModel("1234567812345678", "Dark Vador", "12/24"))
-        cardList.add(CardModel("5834865414872912", "Obi-Wan Kenobi", "01/26"))
 
         updateUI()
 
@@ -170,6 +177,7 @@ class MainActivity : AppCompatActivity() {
             accountViewModel.getBalance(token, userId)
             transactionViewModel.getTransactionHistory(token, userId)
             transactionViewModel.getUsersSentMoneyTo(token, userId)
+            cardViewModel.getCards("Bearer $token", userId)
         }
         swipeRefreshLayout.isRefreshing = false
     }

@@ -150,6 +150,7 @@
         android:layout_marginTop="32dp"
         android:layout_below="@+id/error_message"
         android:background="@drawable/button_border"
+        android:backgroundTint="@color/black"
         android:text="@string/send"
         android:textColor="#FFF"
          />

@@ -53,4 +53,17 @@
     <string name="send">Send</string>
     <string name="go_back">Go Back</string>
     <string name="back_icon">"back icon "</string>
+    <string name="add_new_card">Add new card</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_card">Save card</string>
+    <string name="date_d_expiration_mm_yy">Date d\'expiration (MM/YY)</string>
+    <string name="name">Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="your_cards">Your cards</string>
+    <string name="notifications">Notifications</string>
+    <string name="send_money_again">Send money again</string>
+    <string name="my_cards">My Cards</string>
+    <string name="add_card">Add Card</string>
+    <string name="see_more">See More</string>
+    <string name="recent_transactions">Recent Transactions</string>
 </resources>

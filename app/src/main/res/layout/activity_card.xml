@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#D9D9D9">
+    android:background="#D9D9D9"
+    android:paddingHorizontal="10dp">
 
-    <!-- Section Header -->
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/header_rounded_bg"
-        android:padding="16dp">
+        android:padding="26dp"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/user_image"
@@ -21,6 +21,7 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/user_icon"
             android:src="@drawable/user_icon"
             android:scaleType="centerCrop" />
 
@@ -32,10 +33,10 @@
             android:layout_toEndOf="@id/user_image"
             android:layout_marginStart="16dp"
             android:layout_centerVertical="true"
-            android:text="Jerry Helfer"
+            android:text="@string/name"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/notification_bell"
@@ -44,20 +45,19 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/bell_solid"
-            android:contentDescription="Notifications" />
+            android:contentDescription="@string/notifications" />
     </RelativeLayout>
 
-    <!-- Conteneur des cartes -->
     <RelativeLayout
         android:id="@+id/card_display_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/header"
-        android:layout_above="@id/balance_section"
         android:visibility="visible"
-        android:background="@drawable/section_rounded">
+        android:background="@drawable/section_rounded"
+        android:layout_marginVertical="10dp"
+        android:paddingBottom="20dp">
 
-        <!-- Bouton Retour -->
         <LinearLayout
             android:id="@+id/back_button_container"
             android:layout_width="wrap_content"
@@ -68,13 +68,15 @@
             android:orientation="horizontal"
             android:padding="5dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/back_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/back_icon"
                 android:src="@drawable/baseline_arrow_back_ios_24"
                 app:tint="@android:color/black" />
 
@@ -82,9 +84,9 @@
                 android:id="@+id/back_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Control your finances"
+                android:text="@string/your_cards"
                 android:textColor="@android:color/black"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -92,28 +94,16 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_margin="10dp"
             android:layout_below="@id/back_button_container"
             android:layout_marginTop="15dp"
             android:orientation="horizontal" />
 
-        <!-- Image par défaut si aucune carte -->
-        <ImageView
-            android:id="@+id/empty_card_placeholder"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/credit_cards"
-            android:visibility="gone"/>
-
-        <!-- Bouton Ajouter une carte -->
         <Button
             android:id="@+id/add_card_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Add new card"
+            android:text="@string/add_new_card"
             android:layout_below="@id/recyclerView"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/black"
@@ -121,160 +111,75 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
-    <!-- Formulaire d'ajout de carte -->
     <RelativeLayout
         android:id="@+id/add_card_form_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/header"
-        android:layout_above="@id/balance_section"
-        android:padding="20dp"
-        android:background="@drawable/section_rounded"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/card_number_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Numéro de carte"
-            android:inputType="number"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"/>
-
-        <EditText
-            android:id="@+id/card_holder_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="text"
-            android:padding="10dp"
-            android:layout_below="@id/card_number_input"
-            android:layout_marginBottom="10dp"/>
-
-        <EditText
-            android:id="@+id/card_expiry_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date d'expiration (MM/YY)"
-            android:inputType="text"
-            android:padding="10dp"
-            android:layout_below="@id/card_holder_input"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Bouton save -->
-        <Button
-            android:id="@+id/save_card_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Save card"
-            android:backgroundTint="@color/orange"
-            android:textColor="@android:color/white"
-            android:layout_below="@id/card_expiry_input"
-            android:layout_marginTop="20dp"/>
-
-        <!-- Bouton canbcel -->
-        <Button
-            android:id="@+id/cancel_card_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Cancel"
-            android:backgroundTint="@color/grey"
-            android:textColor="@android:color/white"
-            android:layout_below="@id/save_card_button"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
-
-    <!-- Section Balance -->
-    <RelativeLayout
-        android:id="@+id/balance_section"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/section_rounded"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/header"
         android:padding="10dp"
-        >
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/section_rounded"
+        android:visibility="gone"
+        android:paddingBottom="20dp">
 
-        <TextView
-            android:fontFamily="@font/gontserrat"
-            android:id="@+id/balance_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Total Balance"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:fontFamily="@font/gontserrat"
-            android:id="@+id/account_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_below="@+id/balance_text"
-            android:text="$ 9,343.20"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            />
 
         <LinearLayout
-            android:id="@+id/button_group"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/account_balance"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button1"
-                android:text="Analytics"
+            <LinearLayout
+                android:id="@+id/back_button_container2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/analytics"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/LeftRoundedButton"
-                />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                tools:ignore="UseCompoundDrawables">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button2"
-                android:text="Withdraw"
+            <ImageView
+                android:id="@+id/back_icon2"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/back_icon"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                app:tint="@android:color/black" />
+
+            <TextView
+                android:id="@+id/back_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/arrow_up"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/UnroudedButton"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button3"
-                android:text="Deposit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="0dp"
-                app:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/arrow_down"
-                app:iconGravity="top"
-                app:iconSize="20dp"
-                style="@style/RightRoundedButton"
-                />
-
+                android:text="@string/your_cards"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
+            <include layout="@layout/item_credit_card_form"/>
+
+            <Button
+                android:id="@+id/save_card_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/save_card"
+                android:backgroundTint="@color/orange"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                android:id="@+id/cancel_card_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:backgroundTint="@color/grey"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

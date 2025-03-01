@@ -120,9 +120,8 @@
                         android:id="@+id/recent_users_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
-                        android:text="Send money again"
+                        android:text="@string/send_money_again"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -140,16 +139,15 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/section_rounded"
                     android:layout_marginTop="15dp"
-                    android:paddingTop="10dp">
+                    android:padding="10dp">
 
                     <TextView
                         android:fontFamily="@font/gontserrat"
                         android:id="@+id/my_card_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
-                        android:text="My Cards"
+                        android:text="@string/my_cards"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -159,10 +157,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="30dp"
-                        android:text="+"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/add_card"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        android:textSize="12sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
@@ -170,8 +169,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="30dp"/>
-
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -189,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
-                        android:text="Recent Transactions"
+                        android:text="@string/recent_transactions"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -201,7 +198,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="10dp"
-                        android:text="See More"
+                        android:text="@string/see_more"
                         android:textColor="@android:color/black"
                         android:textSize="12sp" />
 
