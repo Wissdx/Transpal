@@ -4,12 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fr.esgi.transpal.network.dto.BalanceRequest
 import fr.esgi.transpal.network.dto.BalanceResponse
-import fr.esgi.transpal.network.dto.ProfileRequest
-import fr.esgi.transpal.network.dto.ProfileResponse
 import fr.esgi.transpal.network.repositories.AccountRepository
-import fr.esgi.transpal.network.repositories.ProfileRepository
 import kotlinx.coroutines.launch
 
 class AccountViewModel(private val accountRepository: AccountRepository) : ViewModel() {

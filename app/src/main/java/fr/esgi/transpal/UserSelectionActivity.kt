@@ -10,14 +10,17 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import fr.esgi.transpal.network.dto.UserModel
+import fr.esgi.transpal.network.repositories.UserRepository
 import fr.esgi.transpal.viewmodel.UserViewModel
 import fr.esgi.transpal.viewmodel.factories.UserViewModelFactory
 
 class UserSelectionActivity : AppCompatActivity() {
+
+    private val userRepository = UserRepository()
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var userListView: ListView
@@ -35,7 +38,8 @@ class UserSelectionActivity : AppCompatActivity() {
         backTextView = findViewById(R.id.back_here_tv)
         backImageView = findViewById(R.id.back_icon)
 
-        userViewModel = ViewModelProvider(this, UserViewModelFactory()).get(UserViewModel::class.java)
+
+        userViewModel = ViewModelProvider(this, UserViewModelFactory(userRepository)).get(UserViewModel::class.java)
 
         userViewModel.users.observe(this, Observer { users ->
             adapter = UserAdapter(this, users)
