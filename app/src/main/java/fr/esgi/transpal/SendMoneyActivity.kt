@@ -81,13 +81,40 @@ class SendMoneyActivity : AppCompatActivity() {
         }
 
         sendButton.setOnClickListener {
-            val receiverId = receiverIdEt.text.toString().toInt()
-            val amount = amountEt.text.toString().toDouble()
+            val receiverIdText = receiverIdEt.text.toString()
+            val amountText = amountEt.text.toString()
+
+            // On epmeche l'envoi si aucun destinatairen'est choisi
+            if (receiverIdText.isEmpty()) {
+                Toast.makeText(this, "Veuillez sélectionner un destinataire", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // On verif si montant est saisi
+            if (amountText.isEmpty()) {
+                Toast.makeText(this, "Veuillez entrer un montant", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val receiverId = receiverIdText.toIntOrNull()
+            val amount = amountText.toDoubleOrNull()
+
+            // On ctonrole si receiverId est bien un nombre valide
+            if (receiverId == null || receiverId == -1) {
+                Toast.makeText(this, "Destinataire invalide", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // On controle si le montant est un nombre valide et supérieur à 0
+            if (amount == null || amount <= 0) {
+                Toast.makeText(this, "Veuillez entrer un montant valide", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val transactionRequest = TransactionRequest(senderId, receiverId, amount, "€")
-
             transactionViewModel.sendMoney(token, transactionRequest)
         }
+
 
         backTextView.setOnClickListener {
             finish()
