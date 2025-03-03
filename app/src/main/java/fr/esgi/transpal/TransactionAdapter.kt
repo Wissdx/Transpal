@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.esgi.transpal.network.dto.TransactionResponse
 import android.content.Context
 
-class TransactionAdapter(private val transactions: List<TransactionResponse>, private val context: Context) :
-    RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+class TransactionAdapter(
+    private val transactions: List<TransactionResponse>,
+    private val context: Context,
+    private val userId: Int
+) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
     class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val transactionAmount: TextView = itemView.findViewById(R.id.transaction_amount)
@@ -26,19 +29,26 @@ class TransactionAdapter(private val transactions: List<TransactionResponse>, pr
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
 
-        if (transaction.amount < 0) {
-            holder.transactionAmount.setTextColor(ContextCompat.getColor(context, R.color.red))
-        } else {
-            holder.transactionAmount.setTextColor(ContextCompat.getColor(context, R.color.green))
+
+        val isOutgoing = when (transaction.type.lowercase()) {
+            "withdraw", "send" -> transaction.senderId == userId
+            "add_fund" -> false
+            else -> transaction.amount < 0
         }
 
+        val textColor = if (isOutgoing) R.color.red else R.color.green
+        holder.transactionAmount.setTextColor(ContextCompat.getColor(context, textColor))
 
-        holder.transactionAmount.text = String.format("%.2f %s", transaction.amount, transaction.currency)
+        val formattedAmount = if (isOutgoing) {
+            "- %.2f %s".format(Math.abs(transaction.amount), transaction.currency)
+        } else {
+            "+ %.2f %s".format(transaction.amount, transaction.currency)
+        }
 
+        holder.transactionAmount.text = formattedAmount
         holder.transactionDate.text = transaction.createdAt
         holder.transactionType.text = transaction.type
     }
-
 
     override fun getItemCount(): Int = transactions.size
 }
