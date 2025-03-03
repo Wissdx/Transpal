@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -69,6 +70,11 @@ class WithdrawActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Veuillez entrer un montant valide", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        val backButton = findViewById<LinearLayout>(R.id.back_button_container)
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

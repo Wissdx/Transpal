@@ -44,7 +44,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
         transactionViewModel.transactionHistory.observe(this, { transactions ->
             if (transactions.isNotEmpty()) {
                 val recentTransactions = transactions.sortedByDescending { it.createdAt }
-                transactionAdapter = TransactionAdapter(recentTransactions)
+                transactionAdapter = TransactionAdapter(recentTransactions, this)
                 transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
                 transactionsRecyclerView.adapter = transactionAdapter
             } else {
